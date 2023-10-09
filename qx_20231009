@@ -1,1 +1,179 @@
+;2022-07-04：增加对各个模块的说明(部分内容只适用于 1.0.30 以上版本)
+;⚠️注意⚠️: 以下内容中，带“;” “#”的都是注释符号，去掉前面的符号，该行才有效
+
+;general 模块内为一些通用的设置参数项
+[general]
+;profile_img_url=http://www.example.com/example.png
+resource_parser_url = https://fastly.jsdelivr.net/gh/KOP-XIAO/QuantumultX@master/Scripts/resource-parser.js
+server_check_url = http://www.gstatic.com/generate_204
+geo_location_checker = http://ip-api.com/json/?lang=zh-CN, https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/IP_API.js
+running_mode_trigger = filter, filter, TP-LINK_5G_7971:all_direct
+dns_exclusion_list = *.cmpassport.com, *.jegotrip.com.cn, *.icitymobile.mobi, id6.me
+;ssid_suspended_list= TP-LINK_5G_7971
+;udp_whitelist=53, 123, 1900, 80-443
+fallback_udp_policy = direct
+excluded_routes = 192.168.0.0/16, 172.16.0.0/12, 100.64.0.0/10, 10.0.0.0/8
+icmp_auto_reply = true
+
+[dns]
+no-system
+no-ipv6
+server=223.5.5.5
+server=8.8.8.8
+doh-server = https://doh.pub/dns-query
+
+
+[task_local]
+;包含3⃣️种类型: cron 定时任务，UI交互脚本，网络切换脚本
+
+; 1⃣️ 任务模块，可用于签到,天气话费查询等
+;js文件放于iCloud或者本机的Quantumult X/Scripts 路径下。TF版本可直接使用远程js链接
+;从 “分” 开始的5位cron 写法，具体 cron 表达式可自行 Google
+;比如上述语句 代表每天 12 点 2 分，自动执行一次;
+;tag参数为 task 命名标识;
+;img-url参数用于指定 task 的图标(108*108)
+
+;2 12 * * * sample.js, tag=本地示范(左滑编辑，右滑执行), enabled=false, img-url=https://raw.githubusercontent.com/crossutility/Quantumult-X/master/quantumult-x.png
+
+# 2⃣️ UI交互查询脚本示范，在首页长按 节点/策略组 唤出
+event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/streaming-ui-check.js, tag = 流媒体 - 解锁查询, img-url=checkmark.seal.system, enabled=true
+
+# 3⃣️ 网络切换/变化时 触发的脚本类型
+;event-network sample-taks.js
+
+
+#以下为策略组[policy]部分
+# static 策略组中，你需要手动选择想要的节点/策略组。
+# available 策略组将按顺序选择你列表中第一个可用的节点。
+# round-robin 策略组，将按列表的顺序轮流使用其中的节点。
+# url-latency-benchmark 延迟策略组，选取延迟最优节点。
+# dest-hash 策略组，随机负载均衡，但相同域名走固定节点。
+# ssid 策略组，将根据你所设定的网络来自动切换节点/策略组
+;img-url 参数用于指定策略组图标，可远程，也可本地/iCloud(Quantumult X/Images路径下) （108*108 大小）
+;direct/proxy/reject 则只能用本地图标，名字分别为 direct.png, proxy.png,reject.png 放置于 Images 文件夹下即可生效 (108*108 大小)
+
+[policy]
+static = Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Auto.png
+static = Apple-News, Auto, 🇺🇸 United States, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, 🇯🇵 Japan, direct, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Apple_News.png
+static = Apple, DIRECT, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Apple.png
+static = BiliBili, DIRECT, Auto, 🇨🇳 Taiwan, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/bilibili.png
+static = Disney+, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Disney+.png
+static = Netflix, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Netflix.png
+static = Steam, DIRECT, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Game.png
+static = SteamCN, DIRECT, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Game.png
+static = PayPal, DIRECT, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/PayPal.png
+static = YouTube, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/YouTube.png
+static = Google, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Google.png
+static = Microsoft, DIRECT, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Microsoft.png
+static = Telegram, Auto, 🇭🇰 Hong Kong, 🇸🇬 Singapore, 🇯🇵 Japan, 🇺🇸 United States, 🇨🇳 Taiwan, 🇩🇪 Germany, 🇬🇧 Great Britain, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Telegram.png
+static = 🇭🇰 Hong Kong, server-tag-regex=(🇭🇰)|(HK)|(hk)|(Hong Kong)|(HongKong)|(香港), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Hong_Kong.png
+url-latency-benchmark = 🇭🇰 Hong Kong(Auto), server-tag-regex=(🇭🇰)|(HK)|(hk)|(Hong Kong)|(HongKong)|(香港), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Hong_Kong.png
+static = 🇸🇬 Singapore, server-tag-regex=(新加坡)|(狮城)|(🇸🇬)|(Singapore)|(singapore)|(sg)|(SG), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Singapore.png
+url-latency-benchmark = 🇸🇬 Singapore(Auto), server-tag-regex=(新加坡)|(狮城)|(🇸🇬)|(Singapore)|(singapore)|(sg)|(SG), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Singapore.png
+static = 🇨🇳 Taiwan, server-tag-regex=(Taiwan)|(台湾)|(tw)|(TW), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Taiwan.png
+url-latency-benchmark = 🇨🇳 Taiwan(Auto), server-tag-regex=(Taiwan)|(台湾)|(tw)|(TW), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Taiwan.png
+static = 🇩🇪 Germany, server-tag-regex=(🇩🇪)|(Germany)|(德国), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Germany.png
+url-latency-benchmark = 🇩🇪 Germany(Auto), server-tag-regex=(🇩🇪)|(Germany)|(德国), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Germany.png
+static = 🇬🇧 Great Britain, server-tag-regex=(🇬🇧)|(UK)|(英国)|(Great Britain), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/United_Kingdom.png
+url-latency-benchmark = 🇬🇧 Great Britain(Auto), server-tag-regex=(🇬🇧)|(UK)|(英国)|(Great Britain), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/United_Kingdom.png
+static = 🇯🇵 Japan, server-tag-regex=(🇯🇵)|(日本)|(Japan), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Japan.png
+url-latency-benchmark = 🇯🇵 Japan(Auto), server-tag-regex=(🇯🇵)|(日本)|(Japan), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Japan.png
+static = 🇺🇸 United States, server-tag-regex=(🇺🇸)|(United States)|(美国), img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/United_States.png
+url-latency-benchmark = 🇺🇸 United States(Auto), server-tag-regex=(🇺🇸)|(United States)|(美国), check-interval=600, tolerance=0, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/United_States.png
+
+#服务器远程订阅
+[server_remote]
+#远程服务器订阅模块，可直接订阅SSR，SS链接，以及Quantumult X格式的vmess/trojan/https订阅
+#其它格式可用 opt-parser 参数开启解析器导入使用
+#img-url参数用于指定图标，格式要求同样为 108*108 的 png 图片，可远程，可本地
+
+#支持本地/iCloud的节点文件/片段，位于Quantumult X/Profiles路径下
+;servers.snippet, tag=本地服务器, img-url=https://raw.githubusercontent.com/crossutility/Quantumult-X/master/quantumult-x.png, enabled=false
+
+#规则分流远程订阅
+[filter_remote]
+# Block OTA update for iOS
+# https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/SystemOTA/SystemOTA.list, tag=Block OTA Update(iOS), force-policy=reject, update-interval=172800, opt-parser=true, enabled=false
+# Unbreak 后续规则修正
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Direct/Direct.list, tag=Unbreak, force-policy=DIRECT, update-interval=172800, opt-parser=true, enabled=true
+# Advertising 广告
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/QuantumultX/snippet/FanQieNovel.snippet, tag=番茄去广告, force-policy=REJECT, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/QuantumultX/snippet/baiduApp.snippet, tag=百度系app广告屏蔽, force-policy=REJECT, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Advertising/Advertising.list, tag=Advertising, force-policy=REJECT, update-interval=172800, opt-parser=true, enabled=true
+# Privacy 隐私
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/EasyPrivacy/EasyPrivacy.list, tag=Privacy, force-policy=REJECT, update-interval=172800, opt-parser=true, enabled=true
+# Hijacking 运营商劫持或恶意网站
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Hijacking/Hijacking.list, tag=Hijacking, force-policy=REJECT, update-interval=172800, opt-parser=true, enabled=true
+#Bilibili
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/BiliBili/BiliBili.list, tag=BiliBili, force-policy=BiliBili, update-interval=172800, opt-parser=true, enabled=true
+# SteamCN
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/SteamCN/SteamCN.list, tag=SteamCN, force-policy=SteamCN, update-interval=172800, opt-parser=true, enabled=true
+# Steam
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Steam/Steam.list, tag=Steam, force-policy=Steam, update-interval=172800, opt-parser=true, enabled=true
+# Disney+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Disney/Disney.list, tag=Disney+, force-policy=Disney+, update-interval=172800, opt-parser=true, enabled=true
+# Netflix
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Netflix/Netflix.list, tag=Netflix, force-policy=Netflix, update-interval=172800, opt-parser=true, enabled=true
+# YouTube Google
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/YouTube/YouTube.list, tag=YouTube, force-policy=YouTube, update-interval=172800, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list, tag=Google, force-policy=Google, update-interval=172800, opt-parser=true, enabled=true
+# Telegram
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Telegram/Telegram.list, tag=Telegram, force-policy=Telegram, update-interval=172800, opt-parser=true, enabled=true
+# PayPal
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/PayPal/PayPal.list, tag=PayPal, force-policy=PayPal, update-interval=172800, opt-parser=true, enabled=true
+# Apple 服务
+https://raw.githubusercontent.com/Hackl0us/SS-Rule-Snippet/main/Rulesets/Surge/Basic/Apple-News.list, tag=Apple-News, force-policy=Apple-News, update-interval=172800, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/Hackl0us/SS-Rule-Snippet/main/Rulesets/Surge/Basic/Apple-proxy.list, tag=Apple, force-policy=Apple, update-interval=172800, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/Hackl0us/SS-Rule-Snippet/main/Rulesets/Surge/Basic/Apple-direct.list, tag=Apple, force-policy=DIRECT, update-interval=172800, opt-parser=true, enabled=true
+# Microsoft
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Microsoft/Microsoft.list, tag=Microsoft, force-policy=Microsoft, update-interval=172800, opt-parser=true, enabled=true
+# 巴哈姆特
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Bahamut/Bahamut.list, tag=Bahamut,force-policy=🇨🇳 Taiwan, update-interval=172800, opt-parser=true, enabled=true
+# DMM
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/DMM/DMM.list, tag=DMM, force-policy=🇯🇵 Japan, update-interval=172800, opt-parser=true, enabled=true
+# China 中国直连
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list, tag=🇨🇳China, force-policy=DIRECT, update-interval=172800, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/ChinaIPs/ChinaIPs.list, tag=🇨🇳China, force-policy=DIRECT, update-interval=172800, opt-parser=true, enabled=true
+
+#rewrite 复写远程订阅
+[rewrite_remote]
+https://raw.githubusercontent.com/app2smile/rules/master/module/qidian.conf, tag=起点去广告, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/QuantumultX/rewrite/baiduAd.qxrewrite, tag=百度系app广告屏蔽, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/QuantumultX/rewrite/FanQieNovel.qxrewrite, tag=番茄广告屏蔽, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/zmqcherish/proxy-script/main/bilibili/bilibili.conf, tag=B站去广告, update-interval=172800, opt-parser=false, enabled=true
+https://github.com/VirgilClyne/iRingo/raw/main/snippet/News.snippet, tag= iRingo: News, update-interval=172800, opt-parser=false, enabled=true
+https://github.com/VirgilClyne/iRingo/raw/main/snippet/Location.snippet, tag= iRingo: Location & Map, update-interval=172800, opt-parser=false, enabled=true
+https://github.com/chavyleung/scripts/raw/master/box/rewrite/boxjs.rewrite.quanx.conf, tag=boxjs, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/zmqcherish/proxy-script/main/weibo.conf, tag=微博去广告, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/QuantumultX/Advertising/Advertising.conf, tag=复写重定向, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/Semporia/TikTok-Unlock/master/Quantumult-X/TikTok-US.conf, tag=TikTok, update-interval=86400, opt-parser=false, enabled=true
+
+#支持本地/iCloud的复写规则文件，位于Quantumult X/Profiles路径下
+;rewrite.txt, tag=本地复写, opt-parser=false, enabled=false
+
+# 本地服务器部分
+[server_local]
+# 以下示范都是 ip(域名):端口，
+# 比如 vmess-a.203.167.55.4:777 ，实际是 203.167.55.4:777
+# 前面的 ss-a，ws-tls这些，只是为了让你快速找到自己节点的类型
+# 实际使用时，请不要真的 傻乎乎的 写 vmess-a.203.167.55.4:777 这种。
+# 目前支持 shadowsocks/shadowsocksR/Vmess/Trojan/http(s)/Socks5 等类型
+# 支持 tls-cert-sha256 以及 tls-pubkey-sha256 参数等自定义TLS验证
+
+#本地分流规则(对于完全相同的某条规则，本地的将优先生效)
+[filter_local]
+ip-cidr, 10.0.0.0/8, DIRECT
+ip-cidr, 127.0.0.0/8, DIRECT
+ip-cidr, 172.16.0.0/12, DIRECT
+ip-cidr, 192.168.0.0/16, DIRECT
+ip-cidr, 224.0.0.0/24, DIRECT
+geoip, LAN, DIRECT
+geoip, CN, DIRECT
+final, Auto
+
+[rewrite_local]
+
+[mitm]
+passphrase = 339CA163
+p12 = MIILuwIBAzCCC4UGCSqGSIb3DQEHAaCCC3YEggtyMIILbjCCBccGCSqGSIb3DQEHBqCCBbgwggW0AgEAMIIFrQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQIIZZxKbKBreQCAggAgIIFgCuZnN4JlJksabrUaSYo++nctjvBnYc068GF4bBBi0OAuLM2x5NPKsWPKRkeXXu4xnpZ6bWSBO1dNqUdezbCSBk5MghP4ZXKvioV0W7rP2gHLADrgyXZPiSS4+vy3o2YzWcnXgDOlkSxIUfuPmz0Eg+i2reJ4Ypqm2waZ65PFjPyJ+y4H0w66vMYgKFSLF1TVQxrpP3hZRo8FMf15pXKAGqa2olBcm9ozT72SFw5YBQmxfd0yv7K0LQbyEaeeSYkd/xBZpKUb+fad978hF9cSClMrp6xnEBbnC0Sk0aIs8YCN59sdJxR50gaKP4LqsQxsBdO0XVcbGg0bMF0+hzyuABjaI/mw1CQ2g0PzXte71UPqafmbxk7EmEw2+h/FnEpfF8sHlngjMTZP2LaBLkOMM/+M3eWFBzUR9weOyny1CRdHfLa/uDKD+231HtJtCtPJWP1tyML8xI563ECKUGxycvhCyFgHt8nRp34z9bjVl1QOPiICK3MQXwtJButONd9MdbIPxirBAZJY5nXpZL58F5G3+qfrh9rWmFRFaKnEDFl6e5ktwSU/S8L89AEmj5LGVdEIITGwER6B+tcZdkev1tkDYWxteosiiA3Jn/6OTHgJK20X/lIniSvYY8BAmzjgjb0287oQd0sLy6tzJO0yoSrPFNeh4L98XYKUrZ+UnIAk7m1eWyGr3Q32U6OcSljE7MohMxs+h/VnN6rAzu/dDrTeJAUJiXeCivLY+TDjhYk0axTXmoelAaNMt6zsVDBEpaS+I7YiyHeNTodg8pKJMgLGQt8235u+WhrC6cJYfrU2wcglNzuJfs5MJ4LaaxraahgW205mn7BTxvO6g5c2VjuHAiyL1WXLDwvN3mxJ8u9okrOvCZhmhw9tInLnibxKfRLlNAMzfrfla1BCe6V0AlTi4wvlU0Hdht9t/RQXEJmt+ZUy6RHgEnaZhbq4YWQnjgPwq8ZlqKIWSjGtEw+nU02a6QQgE96H55RGOsJ9bhFwvQShbtjVlsABspG+N1yGOg1M/MchMVvEJojG0SH7LF9ne24XVkLYiivEAr/BRU8oXMTfXwLa4gOgcgucQf6W46Z6OFfSSWBssItbhO+8xYSIDHV8nV+OXfCSEmJzUWLz43ega2VGVv6tDs0QfjedPk4eYuoRPIi8yMV2dPEMWqaX2ewJwcBIrpJ5f3bkxx3rM7jiWGsPkUtZOc+mjbGfYwz0anbTMQzsjiPxCfhDeIpZLx3d4SDF5iZLQGqS96mSykH0HENMKAhZrwGsW2FBZalCGV8wv8/fHk8SZzREuVu8bmPGoj4JDhG7iPFJd1RWRmypU+TuQCJAX/yHTlTU9ev28wwJgRG6K4W2Vgx0+pJp2+MGXz3GhfAVQHmgWgB/PaXgXQPNAvPO57Ny1SljutchxuR6m3+Xy5vuJRsnMy2HNBldDgupMfYw+DeBdaJb9wbEzYxhooYAPuZeLTC0xFmVU8cdGbzbbt7dlWphR1L9/WFjKh9s/YxAWX+dHy0QN+wizpsIdBBj4NWxe+AiqTCI9fea3G0da+i88VdLAR5W0uBf3Kh8XVoMFQmLTats0H98taEEG43AHP9FOoQ6vTrv825hq8yZbtsQXLJgB6vVuMYlJkToYhvnA+vnV1e96Fzmi2/Vp7lUYxqa75SeyIivQW9lcoN0q2S6Cvvjtzf+JSIuDvtf8bWTi6kILzBiRnNoA3hhGXmNvTh+ImsGCvB1AC1+q9Y3Ex0WsUTOG/6IaoQ80Vs7c7HfFniwiau+x3UbNcC4B/rDu5VvQxmObWO/oMHOxovOCpjcdZ9cEHJEJOUuYxAvFX5UNA/7T39JZYKs1jf0hDGykq5ccqcdahxLkpavN4W4Pd4bBo44MIwggWfBgkqhkiG9w0BBwGgggWQBIIFjDCCBYgwggWEBgsqhkiG9w0BDAoBAqCCBO4wggTqMBwGCiqGSIb3DQEMAQMwDgQI5U7Lgrojto0CAggABIIEyCtHy/j2zqLA2SpFbSZSx576irXHJpNbuKe8MOv522Nsv4RnpU2ZMuugibL+tmCkAfdkByTCTMYqNDxqqffBah6iyVhJQprZ2TPndcc9VaFcVXV6lXkU8OJuT96PyHxxvoYsE+hnofVmLEpCriGeREFpAGGnu7lHWhgoOAQkfqsR+6WZY/gRN04W3eASBWPQ6ObWiN05lAhDvu79yrBvHhFe4pnopM96lSGEHVnt5HZ91zflECK6VhOTwzj3XUIQrT9tylzJ2/I25ScloP+ZdXGCdv5edpMMUTDl6tZIt3odCChTbZRvl57DTd/Gsgi6XQDbV0IC4KDiQqT1aouAcBpJF93gteZk7dr1AkBnpCgKv5pzhPFVL2n9QiwdZ37fLxdsyrE2w3NfBbmjm7+3Se7H3OQNleCBTYyQ425yEAam1Kldi0pHvcJh7S4RueBXHjvkyRVJNlKOpv5IEyZa+papq8PSkRXt2VMZzwu6dd3Oml5eoh9CZnFkyNXEUU+yY4OoNlRbVGyEScYwhhcmaz0ux7oeTC2E6GbgC5oOkoQC6k9B26gjVN9WY/GBNweI7UjxFDLZhWytgBHBzUKMsMVTYAkiNr8ZOlKHiegFkyrrvyEitj8vmXx7hztNvfN/FZao0C5VWvy7qZlXT1NM0cpK60upqjz9X08pY+qfR8YkPzXpCuLJPK/mdMv3ifpwzX3pGXehv42DbBcCqCH1gO6zEcDcHwpHUHBL6AoUaHvE83sTucok6jkqbKB6eIlJBbct/CG5er/otNbW5611zSAprpSs/yvt5BNx9ZddqyFfW3A/gJ4P34JhcqODJ1wT86EAfzpSsdnMKUfDx8ofLmglOS45aNN/IE6qfoDcK4uGmijA7kS53RwRbSqI048HW6wFTLoMEdZp/3OcqpsUQmJAhuFVO1aZjoVBZs14XCo+HSt6KZVzrNMSE0/5wVovdoqvbW0auEUii84WBjnhClRujk3JtQbkdwYBAWgPtbV68NQd1iYvEyr6luQ7RaV1s9OHrd/2MG27utMOynWAF7p9ULojgJ0HpzknlKjuzl0I+IBq8Uiy6HyEL0mQOljuW4jePxPxB8SLhn88/RQzfsZDody8Df6Rmtp1tuDmXB7s+rsnuOQ1osh24eMHuj8rofhHaBQx4BgtaDAcCVScPDZE7F9HDB6v3DF6NsiZIRmYMhdM3FCL+hheLHwKOYFSmxom3yce34+auFMV56Bcen5UmBk0sZDSY61jqWRqtmqLaqnUF/NkXvxO2Mqw/GlPBQ+QV/uF8j88y9WiLr8gHrPNoJw2N/+7BZw8LZSDLWO5Vt8Od3v+ScLjpEOw/xbLPHQkXAOxr0PYRHhQ95ATPKoksiuZTRe5uunBCPf+zYT+G+Fn3+Hx7fXRl6LbdniTooX/dsKfqb3ilZe+sY//JrclMcjtjTZIIkaISZQagjwBKh2g7lgovPXt0fRJ5KQMDOxucKwRvM/AU3pfBeYE6jrWYp3wwX4B+0DeaELvAr+Neyk0EWq+uDxRayIHwEL+JAEO7Oj1yQ2Nzm4Elr/ktktTal9CvzQAeVtgcvnjG3+a3r+2gSNnd23qzlRd3A+gC4ENbHWBW9lyxYPcKeRgAJ21I5kQogATNzGBgjAjBgkqhkiG9w0BCRUxFgQUQAaUx4lTR6QOHj15m7CvEoPzPL0wWwYJKoZIhvcNAQkUMU4eTABRAHUAYQBuAHQAdQBtAHUAbAB0ACAAWAAgAEMAQQAgADYARABFADYANABBAEMAQgAgACgAMgA5ACAASgB1AG4AIAAyADAAMgAzACkwLTAhMAkGBSsOAwIaBQAEFEwS2U/E3ulowZCwEPOYT+04lyZKBAivz7mrfUHV0A==
 
