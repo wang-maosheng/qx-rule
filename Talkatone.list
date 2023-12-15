@@ -1,5 +1,6 @@
 # > Talkatone
 # REPO: https://github.com/hanierming/rule_script
+host-wildcard,*tktn*,direct
 DOMAIN-SUFFIX,tktn.be,direct
 IP-CIDR,50.117.27.0/24,direct
 IP-CIDR,69.46.75.0/24,direct
