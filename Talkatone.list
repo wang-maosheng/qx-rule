@@ -3,10 +3,11 @@
 #host-wildcard,*tktn*,direct
 #DOMAIN-SUFFIX,tktn.be,direct
 # talkatone
-DOMAIN-SUFFIX,mobilefuse.com,direct
+HOST-SUFFIX,tktn.be,PROXY
+HOST-SUFFIX,talkatone.com,PROXY
+HOST-SUFFIX,mobilefuse.com,PROXY
 DOMAIN-SUFFIX,inmobi.com,direct
 DOMAIN-SUFFIX,crashlytics.com,direct
-DOMAIN-SUFFIX,talkatone.com,direct
 DOMAIN-SUFFIX,kochava.com,direct
 # 这个域名最好走代理，我这边直连已超时
 DOMAIN-SUFFIX,cohere.com,direct
