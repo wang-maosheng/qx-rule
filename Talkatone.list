@@ -1,9 +1,21 @@
 # > Talkatone
 # REPO: https://github.com/hanierming/rule_script
-host-wildcard,*tktn*,direct
-DOMAIN-SUFFIX,tktn.be,direct
+#host-wildcard,*tktn*,direct
+#DOMAIN-SUFFIX,tktn.be,direct
+# talkatone
+DOMAIN-SUFFIX,mobilefuse.com,direct
+DOMAIN-SUFFIX,inmobi.com,direct
+DOMAIN-SUFFIX,crashlytics.com,direct
+DOMAIN-SUFFIX,talkatone.com,direct
+DOMAIN-SUFFIX,kochava.com,direct
+# 这个域名最好走代理，我这边直连已超时
+DOMAIN-SUFFIX,cohere.com,direct
+DOMAIN-SUFFIX,ip-api.com,direct
+DOMAIN-SUFFIX,agkn.com,direct
+DOMAIN-SUFFIX,tktn.at,direct
 IP-CIDR,50.117.27.0/24,direct
 IP-CIDR,69.46.75.0/24,direct
 IP-CIDR,205.164.56.29/24,direct
 #UDP 语音电话
 IP-CIDR,63.251.124.0/24,direct
+
